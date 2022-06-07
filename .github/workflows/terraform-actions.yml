@@ -7,8 +7,8 @@ jobs:
       - run: echo "Start Terraform cookbook"
       - name: Check out code
         uses: actions/checkout@v3
- #     - run: |
- #         echo "GitHub Repository: ${{ github.repository }}"
- #         echo "GitHub Workspace: ${{ github.workspace }}"          
- #         ls -Fla ${{ github.workspace }}
+      - run: |
+          echo "GitHub Repository ${{ github.repository }}"
+          echo "GitHub Workspace ${{ github.workspace }}"          
+          ls -Fla ${{ github.workspace }}
       - run: echo "Ends Terraform cookbook ${{ job.status }}"
