@@ -11,4 +11,4 @@ jobs:
  #         echo "GitHub Repository: ${{ github.repository }}"
  #         echo "GitHub Workspace: ${{ github.workspace }}"          
  #         ls -Fla ${{ github.workspace }}
-      - run: echo "Ends Terraform cookbook: ${{ job.status }}"
+      - run: echo "Ends Terraform cookbook ${{ job.status }}"
