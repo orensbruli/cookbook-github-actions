@@ -1,8 +1,8 @@
-name: Terraform Pull Request
+name: Terraform Pull Request Comment
 on:
   workflow_run:
     workflows:
-      - Terraform Plan
+      - Terraform Pull Request
     types:
       - completed
 permissions:
