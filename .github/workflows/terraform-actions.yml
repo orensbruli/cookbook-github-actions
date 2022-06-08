@@ -4,11 +4,19 @@ jobs:
   terraform-version:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Start Terraform cookbook"
-      - name: Check out code
+      - name: Start Terraform cookbook
+        run: echo "Start Terraform cookbook"
+      - name: Checkout GitHub Repo
         uses: actions/checkout@v3
-      - run: |
-          echo "GitHub Repository ${{ github.repository }}"
-          echo "GitHub Workspace ${{ github.workspace }}"          
-          ls -Fla ${{ github.workspace }}
-      - run: echo "Ends Terraform cookbook ${{ job.status }}"
+      # Installs a specific version of Terraform
+      # https://github.com/marketplace/actions/hashicorp-setup-terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v0.15.0
+      - name: Show Terraform version
+        run: terraform --version
+#       - run: |
+#           echo "GitHub Repository ${{ github.repository }}"
+#           echo "GitHub Workspace ${{ github.workspace }}"          
+#           ls -Fla ${{ github.workspace }}
+      - name: End Terraform cookbook
+        run: echo "Ends Terraform cookbook ${{ job.status }}"
