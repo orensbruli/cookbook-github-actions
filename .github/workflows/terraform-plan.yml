@@ -1,6 +1,8 @@
-name: Terraform Actions Cookbook
+name: Terraform Plan
 on:
   push:
+    branches-ignore:
+      - 'main'
     paths:
       - 'terraform/**'
 jobs:
