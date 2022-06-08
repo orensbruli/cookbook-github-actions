@@ -1,10 +1,11 @@
-name: Terraform Plan
+name: Terraform Apply
 on:
   push:
-    branches-ignore:
+    branches:
       - 'main'
     paths:
       - 'terraform/**'
+  workflow_dispatch:
 permissions:
   id-token: write
   contents: read    # This is required for actions/checkout
@@ -14,7 +15,7 @@ defaults:
 env:
   AWS_REGION : "us-east-1"
 jobs:
-  terraform-plan:
+  terraform-apply:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GitHub Repo
@@ -36,5 +37,5 @@ jobs:
 #        run: terraform --version
       - name: Terraform init
         run: terraform init
-      - name: Terraform plan
-        run: terraform plan -no-color
+      - name: Terraform apply
+        run: terraform apply -no-color -auto-approve
