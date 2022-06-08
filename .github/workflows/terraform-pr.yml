@@ -2,7 +2,7 @@ name: Terraform Pull Request Comment
 on:
   workflow_run:
     workflows:
-      - Terraform Pull Request
+      - 'Terraform Pull Request'
     types:
       - completed
 permissions:
@@ -14,7 +14,7 @@ defaults:
 env:
   AWS_REGION : "us-east-1"
 jobs:
-  terraform-pr:
+  terraform-pr-comment:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GitHub Repo
