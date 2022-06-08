@@ -1,5 +1,8 @@
 name: Terraform Actions Cookbook
-on: [push]
+on:
+  push:
+    paths:
+      - 'terraform/**'
 jobs:
   terraform-version:
     runs-on: ubuntu-latest
