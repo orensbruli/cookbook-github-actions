@@ -10,15 +10,13 @@ permissions:
   contents: read    # This is required for actions/checkout
 defaults:
   run:
-    working-directory: ../terraform
+    working-directory: terraform
 env:
   AWS_REGION : "us-east-1"
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
     steps:
-      - name: Start Terraform cookbook
-        run: echo "Start Terraform cookbook"
       - name: Checkout GitHub Repo
         uses: actions/checkout@v3
       - name: Configure AWS credentials
