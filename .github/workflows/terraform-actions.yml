@@ -11,7 +11,9 @@ jobs:
       # Installs a specific version of Terraform
       # https://github.com/marketplace/actions/hashicorp-setup-terraform
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@0.15.0
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 0.15.0
       - name: Show Terraform version
         run: terraform --version
 #       - run: |
