@@ -1,7 +1,10 @@
 name: Terraform Pull Request
 on:
-  pull_request:
-    types: [opened, edited, reopened]
+  workflow_run:
+    workflows:
+      - Terraform Plan
+    types:
+      - completed
 permissions:
   id-token: write
   contents: read    # This is required for actions/checkout
@@ -11,7 +14,7 @@ defaults:
 env:
   AWS_REGION : "us-east-1"
 jobs:
-  terraform-plan:
+  terraform-pr:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GitHub Repo
@@ -39,6 +42,7 @@ jobs:
         id: tfplan
         run: terraform plan
       - name: Put Terraform plan in pull request
+        if: github.event_name == 'pull_request'
         uses: actions/github-script@v6
         env:
           TFPLAN: "terraform\n${{ steps.tfplan.outputs.stdout }}"
