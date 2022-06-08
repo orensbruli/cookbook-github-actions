@@ -1,6 +1,6 @@
 name: Terraform Pull Request
 on:
-  pull-request:
+  pull_request:
     types: [opened, edited, reopene]
 permissions:
   id-token: write
