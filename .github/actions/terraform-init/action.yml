@@ -1,0 +1,26 @@
+name: Terraform Initialization
+description: Initializes and authorizes Terraform
+runs:
+  using: "composite"
+  steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        #          role-to-assume: arn:aws:iam::493234449900:role/github-terraform-role
+        #          role-session-name: githubterraformsession
+        aws-region: ${{ env.AWS_REGION }}
+    # Installs a specific version of Terraform
+    # https://github.com/marketplace/actions/hashicorp-setup-terraform
+    # Todo cache Terraform actions/cache@v3
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 0.15.0
+    - name: Show Terraform version
+      run: terraform --version
+      shell: bash
+    - name: Terraform init
+      run: terraform init
+      shell: bash
