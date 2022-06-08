@@ -5,25 +5,40 @@ on:
       - 'main'
     paths:
       - 'terraform/**'
+permissions:
+  id-token: write
+  contents: read    # This is required for actions/checkout
+defaults:
+  run:
+    working-directory: terraform
+env:
+  AWS_REGION : "us-east-1"
 jobs:
-  terraform-version:
+  terraform-plan:
     runs-on: ubuntu-latest
     steps:
       - name: Start Terraform cookbook
         run: echo "Start Terraform cookbook"
       - name: Checkout GitHub Repo
         uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::493234449900:role/github-terraform-role
+          role-session-name: githubterraformsession
+          aws-region: ${{ env.AWS_REGION }}
       # Installs a specific version of Terraform
       # https://github.com/marketplace/actions/hashicorp-setup-terraform
+      # Todo cache Terraform actions/cache@v3
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 0.15.0
       - name: Show Terraform version
         run: terraform --version
-#       - run: |
-#           echo "GitHub Repository ${{ github.repository }}"
-#           echo "GitHub Workspace ${{ github.workspace }}"          
-#           ls -Fla ${{ github.workspace }}
+      - name: Terraform init
+        run: terraform init
+      - name: Terraform plan
+        run: terraform plan
       - name: End Terraform cookbook
         run: echo "Ends Terraform cookbook ${{ job.status }}"
