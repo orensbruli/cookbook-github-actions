@@ -16,7 +16,7 @@ on:
 jobs:
   terraform-reuse:
     name: Testing GH WF reuse
-    uses: ./.github/workflows/terraform-init.yml
+    uses: ./.github/workflows/reusable/terraform-init.yml
     with:
       instr: Testing 123
 #  terraform-plan:
