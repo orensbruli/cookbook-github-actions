@@ -9,10 +9,9 @@ on:
     secrets: inherit
 
 jobs:
-    terraform-init:
-      name: Reusable Terraform init testing
-      runs-on: ubuntu-latest
-      steps:
-        - name: Display starting message
-          run: echo "Hello starting shared example of T init"
-
+  terraform-init:
+    name: Reusable Terraform init testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display starting message
+        run: echo "Hello starting shared example of T init"

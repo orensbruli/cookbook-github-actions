@@ -5,19 +5,19 @@ on:
       - 'main'
     paths:
       - 'terraform/**'
-permissions:
-  id-token: write
-  contents: read    # This is required for actions/checkout
-defaults:
-  run:
-    working-directory: terraform
-env:
-  AWS_REGION : "us-east-1"
+#permissions:
+#  id-token: write
+#  contents: read    # This is required for actions/checkout
+#defaults:
+#  run:
+#    working-directory: terraform
+#env:
+#  AWS_REGION : "us-east-1"
 jobs:
   terraform-reuse:
     uses: ./.github/workflows/terraform-init.yml
     with:
-      instr: Testing 123
+      instr: "Testing 123"
 #  terraform-plan:
 #    runs-on: ubuntu-latest
 #    steps:
