@@ -1,0 +1,19 @@
+name: Reusable Workflow Example
+
+on:
+  workflow_call:
+    inputs:
+      varname01:
+        required: true
+        type: string
+      varname02:
+        required: false
+        type: number
+
+jobs:
+  reusable-workflow-job:
+    name: Reusable Workflow Job Name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute Reusable Step 1
+        run: echo "Reusable Step 1 with inputs ${{ inputs.varname01 }} and ${{ inputs.varname02 }}"
