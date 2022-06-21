@@ -20,7 +20,7 @@ jobs:
       - name: Checkout GitHub Repo
         uses: actions/checkout@v3
       - name: Testing calling reuseable WF
-        uses: ./github/workflows/terraform-init.yml
+        uses: ./.github/workflows/terraform-init.yml
         with:
           instr: Testing 123
       - name: Configure AWS credentials
