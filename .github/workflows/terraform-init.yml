@@ -1,0 +1,18 @@
+name: Reusable Terraform workflow init
+
+on:
+  workflow_call:
+    inputs:
+      instr:
+        required: true
+        type: string
+    secrets: inherit
+
+jobs:
+    terraform-init:
+      name: Reusable Terraform init testing
+      runs-on: ubuntu-latest
+      steps:
+        - name: Display starting message
+          run: echo "Hello starting shared example of T init"
+
