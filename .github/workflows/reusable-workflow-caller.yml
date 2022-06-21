@@ -1,10 +1,9 @@
 name: Reusable Workflow Caller Example
+
 on:
-  push:
-    branches-ignore:
-      - 'main'
-    paths:
-      - 'example-reusable-workflow/**'
+  # workflow_dispatch is a manually invoked workflow
+  workflow_dispatch:
+
 jobs:
   reusable-workflow-caller-1A:
     name: 01A Calling Reusable Workflow
