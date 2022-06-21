@@ -1,0 +1,19 @@
+name: Reusable Workflow Caller Example
+
+on:
+  # workflow_dispatch is a manually invoked workflow
+  workflow_dispatch:
+
+jobs:
+  reusable-workflow-caller-1A:
+    name: 01A Calling Reusable Workflow
+    # Reusable GitHub Workflow YAML files must live in root directory ./.github/workflows
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      varname01: 01A
+  reusable-workflow-caller-1B:
+    name: 01B Calling Reusable Workflow
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      varname01: Caller Input String 01B
+      varname02: 1
