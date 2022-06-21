@@ -6,7 +6,6 @@ on:
       instr:
         required: true
         type: string
-    secrets: inherit
 
 jobs:
   terraform-init:
