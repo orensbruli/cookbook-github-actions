@@ -15,9 +15,10 @@ on:
 #  AWS_REGION : "us-east-1"
 jobs:
   terraform-reuse:
+    name: Testing GH WF reuse
     uses: ./.github/workflows/terraform-init.yml
     with:
-      instr: "Testing 123"
+      instr: Testing 123
 #  terraform-plan:
 #    runs-on: ubuntu-latest
 #    steps:
