@@ -13,4 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Display starting message
-        run: echo "Hello starting shared example of T init {{ inputs.instr }}"
+        run: echo "Hello starting shared example of T init ${{ inputs.instr }}"
