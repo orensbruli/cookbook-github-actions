@@ -15,6 +15,7 @@ defaults:
     working-directory: terraform
 env:
   AWS_REGION : "us-east-1"
+  terraform-version: 0.15.0
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
@@ -27,16 +28,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-#      # Installs a specific version of Terraform
-#      # https://github.com/marketplace/actions/hashicorp-setup-terraform
-#      # Todo cache Terraform actions/cache@v3
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 0.15.0
-#      - name: Show Terraform version
-#        run: terraform --version
-      - name: Terraform init
-        run: terraform init
+          terraform-version: ${{ env.terraform-version }}
       - name: Terraform plan
         run: terraform plan -no-color

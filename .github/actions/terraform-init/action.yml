@@ -14,6 +14,10 @@ inputs:
   aws-region:
     description: 'AWS Region, e.g. us-east-2'
     required: true
+  terraform-version:
+    description: Terraform version to use
+    required: false
+    default: 1.2.3
 
 runs:
   using: composite
@@ -24,3 +28,15 @@ runs:
         aws-access-key-id: ${{ inputs.aws-access-key-id }}
         aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
         aws-region: ${{ inputs.aws-region }}
+    #      # Installs a specific version of Terraform
+    #      # https://github.com/marketplace/actions/hashicorp-setup-terraform
+    #      # Todo cache Terraform actions/cache@v3
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: ${{ inputs.terraform-version }}
+    - name: Terraform init
+      run: terraform init
+      shell: bash
+
+
