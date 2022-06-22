@@ -1,4 +1,4 @@
-name: Composite Action Demp
+name: Composite Action Demo
 
 on:
   # workflow_dispatch is a manually invoked workflow
@@ -8,5 +8,8 @@ jobs:
   composite_action_caller:
     runs-on: ubuntu-latest
     steps:
+      # Need to check out code before using local composite actions
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - name: Calling composite action step
         uses: ./.github/actions/composite_action

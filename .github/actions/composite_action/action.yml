@@ -6,5 +6,6 @@ description: An example of GitHub Composite Action
 runs:
   using: composite
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - name: Test Echo
+      run: echo "Test 123"
+      shell: bash
