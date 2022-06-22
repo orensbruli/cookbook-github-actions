@@ -19,15 +19,23 @@ on:
         description: Example of workflow input parameter named varname02
         required: false
         type: number
+        default: 0
     secrets:
       secretvar01:
         description: Example of workflow secret parameter secretvar01
         required: false
+    outputs:
+      outputvar01:
+        description: Example of workflow output return named outputvar01
+        value: ${{ jobs.reusable_workflow_job.outputs.reusable_workflow_job_output }}
+
 
 jobs:
-  reusable-workflow-job:
+  reusable_workflow_job:
     name: Reusable Workflow Job Name
     runs-on: ubuntu-latest
+    outputs:
+      reusable_workflow_job_output: ${{ steps.reusable_workflow_job_retval_id.outputs.retval }}
     steps:
       - name: Execute Reusable Step One
         run: echo "Reusable Step One with inputs ${{ inputs.varname01 }} and ${{ inputs.varname02 }}"
@@ -35,3 +43,6 @@ jobs:
         run: |
           echo "Reusable Step Two with secret ${{ secrets.secretvar01 }}"
           echo "Reusable Workflow always has access to ${{ github.token }} and ${{ secrets.GITHUB_TOKEN }}"
+      - name: Generate Output
+        id: reusable_workflow_job_retval_id
+        run: echo "::set-output name=retval::WF Return Value ${{ inputs.varname01 }}-${{ inputs.varname02 }}"

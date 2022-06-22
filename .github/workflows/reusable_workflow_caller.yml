@@ -5,23 +5,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  reusable-workflow-caller-1A:
+  reusable_workflow_caller_1A:
     name: 01A Calling Reusable Workflow
     # Use the `uses` keyword to invoke Reusable GitHub Workflows
-    uses: ./.github/workflows/reusable-workflow.yml
+    uses: ./.github/workflows/reusable_workflow.yml
     with:
       varname01: 01A
-  reusable-workflow-caller-2A:
+  reusable_workflow_caller_2A:
     name: 02A Calling Reusable Workflow
     needs:
-      - reusable-workflow-caller-1A
-    uses: ./.github/workflows/reusable-workflow.yml
+      - reusable_workflow_caller_1A
+    uses: ./.github/workflows/reusable_workflow.yml
     with:
-      varname01: 02A
+      # Example of using output of parent reusable workflow
+      varname01: ${{ needs.reusable_workflow_caller_1A.outputs.outputvar01 }}
       varname02: 2
-  reusable-workflow-caller-1B:
+  reusable_workflow_caller_1B:
     name: 01B Calling Reusable Workflow
-    uses: ./.github/workflows/reusable-workflow.yml
+    uses: ./.github/workflows/reusable_workflow.yml
     with:
       varname01: Caller Input String 01B
       varname02: 1
