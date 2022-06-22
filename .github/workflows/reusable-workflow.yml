@@ -8,16 +8,18 @@ on:
   workflow_call:
     inputs:
       varname01:
+        description: Example of workflow input parameter named varname01
         required: true
         # type can be string, number, or boolean
         type: string
       varname02:
+        description: Example of workflow input parameter named varname02
         required: false
         type: number
     secrets:
-      securevar01:
+      GITHUB_TOKEN:
+        description: Example of workflow GitHub secret parameter GITHUB_TOKEN
         required: false
-
 
 jobs:
   reusable-workflow-job:
@@ -27,4 +29,4 @@ jobs:
       - name: Execute Reusable Step One
         run: echo "Reusable Step One with inputs ${{ inputs.varname01 }} and ${{ inputs.varname02 }}"
       - name: Execute Reusable Step Two
-        run: echo "Reusable Step Two with secret ${{ secrets.securevar01 }}"
+        run: echo "Reusable Step Two with secret ${{ secrets.GITHUB_TOKEN }}"
