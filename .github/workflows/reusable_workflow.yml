@@ -4,7 +4,7 @@
 # * Cannot use other reusable GitHub Workflow YAMLs
 # * environment variables are not automatically included
 # * callers cannot use workflow `strategy`
-name: Reusable Workflow Call Example
+name: Sample Reusable Workflow
 
 on:
   # workflow_call is for reusable workflows called by other workflows
@@ -38,11 +38,11 @@ jobs:
       reusable_workflow_job_output: ${{ steps.reusable_workflow_job_retval_id.outputs.retval }}
     steps:
       - name: Execute Reusable Step One
-        run: echo "Reusable Step One with inputs ${{ inputs.varname01 }} and ${{ inputs.varname02 }}"
+        run: echo "Reusable Step One with inputs '${{ inputs.varname01 }}' and '${{ inputs.varname02 }}'"
       - name: Execute Reusable Step Two
         run: |
           echo "Reusable Step Two with secret ${{ secrets.secretvar01 }}"
-          echo "Reusable Workflow always has access to ${{ github.token }} and ${{ secrets.GITHUB_TOKEN }}"
+          echo "Reusable Workflow always has access to '${{ github.token }}' and '${{ secrets.GITHUB_TOKEN }}'"
       - name: Generate Output
         id: reusable_workflow_job_retval_id
         run: echo "::set-output name=retval::WF Return Value ${{ inputs.varname01 }}-${{ inputs.varname02 }}"
