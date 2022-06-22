@@ -1,4 +1,4 @@
-name: Reusable Workflow Caller Example
+name: Reusable Workflow Caller Demo
 
 on:
   # workflow_dispatch is a manually invoked workflow
