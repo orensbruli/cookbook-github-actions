@@ -1,14 +1,23 @@
-name: Reusable Workflow Example
+# Reusable GitHub Workflow
+# * YAML files must live in root directory ./.github/workflows
+# * Cannot use other reusable GitHub Workflow YAMLs
+name: Reusable Workflow Call Example
 
 on:
+  # workflow_call is for reusable workflows called by other workflows
   workflow_call:
     inputs:
       varname01:
         required: true
+        # type can be string, number, or boolean
         type: string
       varname02:
         required: false
         type: number
+    secrets:
+      securevar01:
+        required: false
+
 
 jobs:
   reusable-workflow-job:
@@ -16,6 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Execute Reusable Step One
-        run: echo "Reusable Step One"
+        run: echo "Reusable Step One with inputs ${{ inputs.varname01 }} and ${{ inputs.varname02 }}"
       - name: Execute Reusable Step Two
-        run: echo "Reusable Step Two with inputs ${{ inputs.varname01 }} and ${{ inputs.varname02 }}"
+        run: echo "Reusable Step Two with secret ${{ secrets.securevar01 }}"

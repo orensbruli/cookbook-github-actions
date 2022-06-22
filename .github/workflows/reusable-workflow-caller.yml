@@ -17,3 +17,5 @@ jobs:
     with:
       varname01: Caller Input String 01B
       varname02: 1
+    # Callers can pass all secrets to reusable workflows via inherit
+    secrets: inherit
