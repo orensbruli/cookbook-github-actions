@@ -1,0 +1,10 @@
+# https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+name: Sample Composite Action
+author: Jirawat Uttayaya (juttayaya)
+description: An example of GitHub Composite Action
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3

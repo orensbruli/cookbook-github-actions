@@ -1,0 +1,12 @@
+name: Composite Action Demp
+
+on:
+  # workflow_dispatch is a manually invoked workflow
+  workflow_dispatch:
+
+jobs:
+  composite_action_caller:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Calling composite action step
+        uses: ./.github/actions/composite_action
