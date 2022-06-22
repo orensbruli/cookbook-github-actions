@@ -12,4 +12,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Calling composite action step
-        uses: ./.github/actions/composite_action
+        uses: ./.github/actions/composite-action

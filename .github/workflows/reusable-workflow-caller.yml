@@ -8,14 +8,14 @@ jobs:
   reusable_workflow_caller_1A:
     name: 01A Calling Reusable Workflow
     # Use the `uses` keyword to invoke Reusable GitHub Workflows
-    uses: ./.github/workflows/reusable_workflow.yml
+    uses: ./.github/workflows/reusable-workflow.yml
     with:
       varname01: 01A
   reusable_workflow_caller_2A:
     name: 02A Calling Reusable Workflow
     needs:
       - reusable_workflow_caller_1A
-    uses: ./.github/workflows/reusable_workflow.yml
+    uses: ./.github/workflows/reusable-workflow.yml
     with:
       # Example of using output of parent reusable workflow
       varname01: ${{ needs.reusable_workflow_caller_1A.outputs.outputvar01 }}
@@ -23,7 +23,7 @@ jobs:
   reusable_workflow_caller_1B:
     name: 01B Calling Reusable Workflow
     # An example of calling reusable actions in other public repositories
-    uses: juttayaya/cookbook-github-actions/.github/workflows/reusable_workflow.yml@main
+    uses: juttayaya/cookbook-github-actions/.github/workflows/reusable-workflow.yml@main
     with:
       varname01: Caller Input String 01B
       varname02: 1
