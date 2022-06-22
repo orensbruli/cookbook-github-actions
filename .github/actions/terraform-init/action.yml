@@ -35,8 +35,8 @@ runs:
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: ${{ inputs.terraform-version }}
-    - name: Terraform init
-      run: terraform init
-      shell: bash
+#    - name: Terraform init
+#      run: terraform init
+#      shell: bash
 
 
