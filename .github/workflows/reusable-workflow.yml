@@ -17,8 +17,8 @@ on:
         required: false
         type: number
     secrets:
-      GITHUB_TOKEN:
-        description: Example of workflow GitHub secret parameter GITHUB_TOKEN
+      secretvar01:
+        description: Example of workflow GitHub secret parameter secretvar01
         required: false
 
 jobs:
