@@ -21,7 +21,7 @@ on:
         type: number
     secrets:
       secretvar01:
-        description: Example of workflow GitHub secret parameter secretvar01
+        description: Example of workflow secret parameter secretvar01
         required: false
 
 jobs:
@@ -34,4 +34,4 @@ jobs:
       - name: Execute Reusable Step Two
         run: |
           echo "Reusable Step Two with secret ${{ secrets.secretvar01 }}"
-          echo "Reusable Workflow always has access to ${{ github.token ]} and ${{ secrets.GITHUB_TOKEN }}"
+          echo "Reusable Workflow always has access to ${{ github.token }} and ${{ secrets.GITHUB_TOKEN }}"
