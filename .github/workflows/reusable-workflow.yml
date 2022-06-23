@@ -27,15 +27,15 @@ on:
     outputs:
       outputvar01:
         description: Example of workflow output return named outputvar01
-        value: ${{ jobs.reusable_workflow_job.outputs.reusable_workflow_job_output }}
+        value: ${{ jobs.reusable-workflow-job.outputs.reusable-workflow-job-output }}
 
 
 jobs:
-  reusable_workflow_job:
+  reusable-workflow-job:
     name: Reusable Workflow Job Name
     runs-on: ubuntu-latest
     outputs:
-      reusable_workflow_job_output: ${{ steps.reusable_workflow_job_retval_id.outputs.retval }}
+      reusable-workflow-job-output: ${{ steps.reusable-workflow-job-retval-id.outputs.retval }}
     steps:
       - name: Execute Reusable Step One
         run: echo "Reusable Step One with inputs '${{ inputs.varname01 }}' and '${{ inputs.varname02 }}'"
@@ -44,5 +44,5 @@ jobs:
           echo "Reusable Step Two with secret '${{ secrets.secretvar01 }}'"
           echo "Reusable Workflow always has access to '${{ github.token }}' and '${{ secrets.GITHUB_TOKEN }}'"
       - name: Generate Output
-        id: reusable_workflow_job_retval_id
+        id: reusable-workflow-job-retval-id
         run: echo "::set-output name=retval::WF Return Value ${{ inputs.varname01 }}-${{ inputs.varname02 }}"

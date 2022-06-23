@@ -10,12 +10,13 @@ on:
 permissions:
   id-token: write
   contents: read    # This is required for actions/checkout
-defaults:
-  run:
-    working-directory: terraform
 env:
   AWS_REGION : "us-east-1"
   terraform-version: 0.15.0
+  terraform-directory: "terraform"
+defaults:
+  run:
+    working-directory: ${{ env.terraform-directory }}
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
@@ -29,7 +30,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
           terraform-version: ${{ env.terraform-version }}
-      - name: Terraform init
-        run: terraform init
+          terraform-directory: ${{ env.terraform-directory }}
+#      - name: Terraform init
+#        run: terraform init
       - name: Terraform plan
         run: terraform plan -no-color
