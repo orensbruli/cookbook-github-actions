@@ -14,9 +14,9 @@ env:
   AWS_REGION : "us-east-1"
   terraform-version: 0.15.0
   terraform-directory: "terraform"
-defaults:
-  run:
-    working-directory: terraform
+#defaults:
+#  run:
+#    working-directory: terraform
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
@@ -34,4 +34,5 @@ jobs:
 #      - name: Terraform init
 #        run: terraform init
       - name: Terraform plan
+        working-directory: ${{ env.terraform-directory }}
         run: terraform plan -no-color
