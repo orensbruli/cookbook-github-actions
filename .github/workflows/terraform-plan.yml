@@ -16,7 +16,7 @@ env:
   terraform-directory: "terraform"
 defaults:
   run:
-    working-directory: ${{ env.terraform-directory }}
+    working-directory: terraform
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
