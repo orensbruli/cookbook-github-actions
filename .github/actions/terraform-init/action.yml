@@ -62,8 +62,8 @@ runs:
         echo "-- end  ls -Fla ~"
         pwd
         echo "end pwd"
-        ls -Fla $TF_PLUGIN_CACHE_DIR
-        echo "end         ls -Fla $TF_PLUGIN_CACHE_DIR"
+        ls -Fla ~/.terraform.d
+        echo "end         ls -Fla ~/.terraform.d"
         terraform init
       shell: bash
       env:
