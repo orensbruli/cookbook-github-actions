@@ -12,11 +12,8 @@ permissions:
   contents: read    # This is required for actions/checkout
 env:
   AWS_REGION : "us-east-1"
-  terraform-version: 0.15.0
+  terraform-version: 1.2.3
   terraform-directory: "terraform"
-#defaults:
-#  run:
-#    working-directory: terraform
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
@@ -31,8 +28,6 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           terraform-version: ${{ env.terraform-version }}
           terraform-directory: ${{ env.terraform-directory }}
-#      - name: Terraform init
-#        run: terraform init
       - name: Terraform plan
         working-directory: ${{ env.terraform-directory }}
         run: terraform plan -no-color
