@@ -67,6 +67,8 @@ runs:
         ls -Fla ~/.terraform.d/plugin-cache
         echo "end ls -Fla ~/.terraform.d/plugin-cache"
         terraform init
+        ls -Fla ~/.terraform.d/plugin-cache
+        echo "After init end ls -Fla ~/.terraform.d/plugin-cache"
       shell: bash
       env:
         TF_PLUGIN_CACHE_DIR: ${{ inputs.terraform-plugin-cache-directory }}
