@@ -31,3 +31,6 @@ override.tf.json
 # Ignore IntelliJ files
 *.iml
 .idea/
+
+# Ignore ASDF files
+**/.tool-versions
