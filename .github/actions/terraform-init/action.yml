@@ -39,6 +39,17 @@ runs:
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: ${{ inputs.terraform-version }}
+    - name: Configure Terraform plugin cache
+      run: |
+        export TF_PLUGIN_CACHE_DIR=~/.terraform.d/plugin-cache
+        mkdir -p $TF_PLUGIN_CACHE_DIR
+      shell: bash
+    - name: Use Terraform plugin cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.terraform.d/plugin-cache
+        key: ${{ runner.os }}-tf-plugin-cache-${{ hashFiles(format('{0}/**/.terraform.lock.hcl', inputs.terraform-directory)) }}
+        restore-keys: ${{ runner.os }}-tf-plugin-cache-
     - name: Terraform init
       working-directory: ${{ inputs.terraform-directory }}
       run: terraform init
