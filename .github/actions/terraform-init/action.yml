@@ -52,14 +52,15 @@ runs:
       with:
         # Using ~ in GitHub Actions path because there is no $HOME env var equivalent
         path: ~/.terraform.d/plugin-cache
-        key: ${{ runner.os }}-tf-plugin-cache5-${{ hashFiles(format('{0}/**/.terraform.lock.hcl', inputs.terraform-directory)) }}
-        restore-keys: ${{ runner.os }}-tf-plugin-cache5-
+        key: ${{ runner.os }}-tf-plugin-cache6-${{ hashFiles(format('{0}/**/.terraform.lock.hcl', inputs.terraform-directory)) }}
+        restore-keys: ${{ runner.os }}-tf-plugin-cache6-
     - name: Terraform init
       working-directory: ${{ inputs.terraform-directory }}
       run: |
         ls -Fla ~/.terraform.d/plugin-cache
         echo "end ls -Fla ~/.terraform.d/plugin-cache"
         terraform init
+        cat ./.terraform.lock.hcl
         ls -Fla ~/.terraform.d/plugin-cache
         echo "After init end ls -Fla ~/.terraform.d/plugin-cache"
       shell: bash
