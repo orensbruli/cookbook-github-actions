@@ -32,10 +32,9 @@ runs:
         aws-access-key-id: ${{ inputs.aws-access-key-id }}
         aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
         aws-region: ${{ inputs.aws-region }}
-    # Installs a specific version of Terraform
-    # https://github.com/marketplace/actions/hashicorp-setup-terraform
-    # Todo cache Terraform actions/cache@v3
     - name: Setup Terraform
+      # Installs a specific version of Terraform
+      # https://github.com/marketplace/actions/hashicorp-setup-terraform
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: ${{ inputs.terraform-version }}
@@ -52,21 +51,16 @@ runs:
       with:
         # Using ~ in GitHub Actions path because there is no $HOME env var equivalent
         path: ~/.terraform.d/plugin-cache
-        key: ${{ runner.os }}-tf-plugin-cache7-${{ hashFiles(format('{0}/**/.terraform.lock.hcl', inputs.terraform-directory)) }}
-        restore-keys: ${{ runner.os }}-tf-plugin-cache7-
+        key: ${{ runner.os }}-tf-plugin-cache-${{ hashFiles(format('{0}/**/.terraform.lock.hcl', inputs.terraform-directory)) }}
+        restore-keys: ${{ runner.os }}-tf-plugin-cache-
     - name: Terraform init
       working-directory: ${{ inputs.terraform-directory }}
+      # The usual scenario is to create .terraform.lock.hcl on a Mac and run on Linux
+      # If using file-based provider caching, Terraform may not have the opportunity
+      # to update .terraform.lock.hcl with the Linux checksum
+      # terraform providers lock command does that explicitly
+      # https://www.terraform.io/language/files/dependency-lock#new-provider-package-checksums
       run: |
-        ls -Fla ~/.terraform.d/plugin-cache
-        echo "end ls -Fla ~/.terraform.d/plugin-cache"
-        # The usual scenario is create .terraform.lock.hcl on a Mac and run on Linux
-        # If using file-based provider caching, Terraform may not have the opportunity
-        # to update .terraform.lock.hcl with the Linux checksum
-        # terraform providers lock command does that explicitly
-        # https://www.terraform.io/language/files/dependency-lock#new-provider-package-checksums
         terraform providers lock -platform=linux_amd64
         terraform init
-        cat ./.terraform.lock.hcl
-        ls -Fla ~/.terraform.d/plugin-cache
-        echo "After init end ls -Fla ~/.terraform.d/plugin-cache"
       shell: bash

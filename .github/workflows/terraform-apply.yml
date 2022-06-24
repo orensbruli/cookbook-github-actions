@@ -1,4 +1,4 @@
-name: Terraform Apply
+name: Terraform Plan
 on:
   push:
     branches:
@@ -6,38 +6,32 @@ on:
     paths:
       - 'terraform/**'
   workflow_dispatch:
+
 permissions:
   id-token: write
   contents: read    # This is required for actions/checkout
-defaults:
-  run:
-    working-directory: terraform
 env:
   AWS_REGION : "us-east-1"
+  terraform-version: 1.2.3
+  terraform-directory: "terraform"
 jobs:
-  terraform-apply:
+  terraform-plan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GitHub Repo
         uses: actions/checkout@v3
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Initialize Terraform
+        uses: ./.github/actions/terraform-init
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-#      # Installs a specific version of Terraform
-#      # https://github.com/marketplace/actions/hashicorp-setup-terraform
-#      # Todo cache Terraform actions/cache@v3
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 0.15.0
-#      - name: Show Terraform version
-#        run: terraform --version
-      - name: Terraform init
-        run: terraform init
+          terraform-version: ${{ env.terraform-version }}
+          terraform-directory: ${{ env.terraform-directory }}
       - name: Terraform plan
-        run: terraform plan -no-color
+        working-directory: ${{ env.terraform-directory }}
+        run: terraform plan -no-color -out=github-tf.plan
       - name: Terraform apply
-        run: terraform apply -no-color -auto-approve
+        working-directory: ${{ env.terraform-directory }}
+        run: terraform apply -no-color -auto-approve github-tf.plan
+
