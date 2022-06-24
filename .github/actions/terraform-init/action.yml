@@ -59,7 +59,12 @@ runs:
       run: |
         ls -Fla ~/.terraform.d/plugin-cache
         echo "end ls -Fla ~/.terraform.d/plugin-cache"
-        terraform providers lock -platform=linux_arm64 -platform=linux_amd64
+        # The usual scenario is create .terraform.lock.hcl on a Mac and run on Linux
+        # If using file-based provider caching, Terraform may not have the opportunity
+        # to update .terraform.lock.hcl with the Linux checksum
+        # terraform providers lock command does that explicitly
+        # https://www.terraform.io/language/files/dependency-lock#new-provider-package-checksums
+        terraform providers lock -platform=linux_amd64
         terraform init
         cat ./.terraform.lock.hcl
         ls -Fla ~/.terraform.d/plugin-cache
