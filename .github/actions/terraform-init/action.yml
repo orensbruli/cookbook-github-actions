@@ -59,7 +59,11 @@ runs:
       run: |
         echo "TF_PLUGIN_CACHE_DIR: $TF_PLUGIN_CACHE_DIR"
         ls -Fla ~
+        echo "-- end  ls -Fla ~"
+        pwd
+        echo "end pwd"
         ls -Fla $TF_PLUGIN_CACHE_DIR
+        echo "end         ls -Fla $TF_PLUGIN_CACHE_DIR"
         terraform init
       shell: bash
       env:
