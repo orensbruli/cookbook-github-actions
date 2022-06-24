@@ -25,7 +25,7 @@ inputs:
   terraform-plugin-cache-directory:
     description: Directory where Terraform plugin cache is located
     required: false
-    default: ~/.terraform.d/plugin-cache
+    default: '~/.terraform.d/plugin-cache'
 
 runs:
   using: composite
