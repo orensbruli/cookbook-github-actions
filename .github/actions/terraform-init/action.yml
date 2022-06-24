@@ -22,6 +22,10 @@ inputs:
     description: Directory where Terraform config is located
     required: false
     default: '.'
+  terraform-plugin-cache-directory:
+    description: Directory where Terraform plugin cache is located
+    required: false
+    default: ~/.terraform.d/plugin-cache
 
 runs:
   using: composite
@@ -40,10 +44,10 @@ runs:
       with:
         terraform_version: ${{ inputs.terraform-version }}
     - name: Configure Terraform plugin cache
-      run: |
-        export TF_PLUGIN_CACHE_DIR=~/.terraform.d/plugin-cache
-        mkdir -p $TF_PLUGIN_CACHE_DIR
+      run: mkdir -p $TF_PLUGIN_CACHE_DIR
       shell: bash
+      env:
+        TF_PLUGIN_CACHE_DIR: ${{ inputs.terraform-plugin-cache-directory }}
     - name: Use Terraform plugin cache
       uses: actions/cache@v3
       with:
@@ -56,5 +60,5 @@ runs:
         echo "TF_PLUGIN_CACHE_DIR: $TF_PLUGIN_CACHE_DIR"
         terraform init
       shell: bash
-
-
+      env:
+        TF_PLUGIN_CACHE_DIR: ${{ inputs.terraform-plugin-cache-directory }}
