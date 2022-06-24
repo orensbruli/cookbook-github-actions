@@ -63,7 +63,9 @@ runs:
         pwd
         echo "end pwd"
         ls -Fla ~/.terraform.d
-        echo "end         ls -Fla ~/.terraform.d"
+        echo "end ls -Fla ~/.terraform.d"
+        ls -Fla ~/.terraform.d/plugin-cache
+        echo "end ls -Fla ~/.terraform.d/plugin-cache"
         terraform init
       shell: bash
       env:
