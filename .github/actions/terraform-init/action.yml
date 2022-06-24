@@ -52,7 +52,9 @@ runs:
         restore-keys: ${{ runner.os }}-tf-plugin-cache-
     - name: Terraform init
       working-directory: ${{ inputs.terraform-directory }}
-      run: terraform init
+      run: |
+        echo "TF_PLUGIN_CACHE_DIR: $TF_PLUGIN_CACHE_DIR"
+        terraform init
       shell: bash
 
 
