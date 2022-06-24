@@ -51,7 +51,8 @@ runs:
     - name: Use Terraform plugin cache
       uses: actions/cache@v3
       with:
-        path: ${{ inputs.terraform-plugin-cache-directory }}
+        path: |
+          ~/.terraform.d/plugin-cache
         key: ${{ runner.os }}-tf-plugin-cache-${{ hashFiles(format('{0}/**/.terraform.lock.hcl', inputs.terraform-directory)) }}
         restore-keys: ${{ runner.os }}-tf-plugin-cache-
     - name: Terraform init
