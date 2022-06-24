@@ -22,10 +22,6 @@ inputs:
     description: Directory where Terraform config is located
     required: false
     default: '.'
-  terraform-plugin-cache-directory:
-    description: Directory where Terraform plugin cache is located
-    required: false
-    default: ${{ env.GITHUB_WORKSPACE }}/../.terraform.d/plugin-cache
 
 runs:
   using: composite
@@ -44,27 +40,26 @@ runs:
       with:
         terraform_version: ${{ inputs.terraform-version }}
     - name: Configure Terraform plugin cache
-      # run: mkdir -p $TF_PLUGIN_CACHE_DIR
-      run: mkdir -p ${{ env.GITHUB_WORKSPACE }}/../.terraform.d/plugin-cache
+      # Using bash $HOME var because ~ is inconsistent in GitHub Actions and Terraform
+      # For more info on .terraformrc and plugin_cache_dir
+      # https://www.terraform.io/cli/config/config-file
+      run: |
+        echo 'plugin_cache_dir="$HOME/.terraform.d/plugin-cache"' > $HOME/.terraformrc
+        mkdir -p $HOME/.terraform.d/plugin-cache
       shell: bash
-      env:
-        TF_PLUGIN_CACHE_DIR: ${{ env.GITHUB_WORKSPACE }}/../.terraform.d/plugin-cache
     - name: Use Terraform plugin cache
       uses: actions/cache@v3
       with:
-        path: ${{ env.GITHUB_WORKSPACE }}/../.terraform.d/plugin-cache
-        key: ${{ runner.os }}-tf-plugin-cache4-${{ hashFiles(format('{0}/**/.terraform.lock.hcl', inputs.terraform-directory)) }}
-        restore-keys: ${{ runner.os }}-tf-plugin-cache4-
+        # Using ~ in GitHub Actions path because there is no $HOME env var equivalent
+        path: ~/.terraform.d/plugin-cache
+        key: ${{ runner.os }}-tf-plugin-cache5-${{ hashFiles(format('{0}/**/.terraform.lock.hcl', inputs.terraform-directory)) }}
+        restore-keys: ${{ runner.os }}-tf-plugin-cache5-
     - name: Terraform init
       working-directory: ${{ inputs.terraform-directory }}
       run: |
-        echo "TF_PLUGIN_CACHE_DIR: $TF_PLUGIN_CACHE_DIR"
-        echo "GW: ${{ env.GITHUB_WORKSPACE }}/../.terraform.d/plugin-cache"
-        ls -Fla ${{ env.GITHUB_WORKSPACE }}/../.terraform.d/plugin-cache
-        echo "end ls -Fla ${{ env.GITHUB_WORKSPACE }}/../.terraform.d/plugin-cache"
+        ls -Fla ~/.terraform.d/plugin-cache
+        echo "end ls -Fla ~/.terraform.d/plugin-cache"
         terraform init
-        ls -Fla ${{ env.GITHUB_WORKSPACE }}/../.terraform.d/plugin-cache
-        echo "After init end ls -Fla ${{ env.GITHUB_WORKSPACE }}/../.terraform.d/plugin-cache"
+        ls -Fla ~/.terraform.d/plugin-cache
+        echo "After init end ls -Fla ~/.terraform.d/plugin-cache"
       shell: bash
-      env:
-        TF_PLUGIN_CACHE_DIR: ${{ env.GITHUB_WORKSPACE }}/../.terraform.d/plugin-cache
