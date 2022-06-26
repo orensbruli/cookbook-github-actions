@@ -26,7 +26,7 @@ override.tf.json
 # !example_override.tf
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
-# example: *tfplan*
+*tfplan*
 
 # Ignore IntelliJ files
 *.iml
@@ -34,3 +34,9 @@ override.tf.json
 
 # Ignore ASDF files
 **/.tool-versions
+
+# Ignore npm node_modules dir
+node/node_modules/
+
+# Ignore Babel output JS
+node/dist/
