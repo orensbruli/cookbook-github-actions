@@ -64,6 +64,7 @@ jobs:
         working-directory: ${{ env.terraform-directory }}
         run: |
           terraform plan -no-color | tee ./tf.plan
-          echo "### Terraform Plan on envname ${{ inputs.envname }} :rocket:" >> $GITHUB_STEP_SUMMARY
-          ls
+          echo "### Terraform Plan on envname ${{ inputs.envname }} from $ {{ GITHUB_REF_NAME }} :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo '~~~' >> $GITHUB_STEP_SUMMARY
           cat ./tf.plan >> $GITHUB_STEP_SUMMARY
+          echo '~~~' >> $GITHUB_STEP_SUMMARY
