@@ -65,6 +65,5 @@ jobs:
         run: |
           terraform plan -no-color | tee ./tf.plan
           echo "### Terraform Plan on envname ${{ inputs.envname }} :rocket:" >> $GITHUB_STEP_SUMMARY
-          echo "```" >> $GITHUB_STEP_SUMMARY
+          ls
           cat ./tf.plan >> $GITHUB_STEP_SUMMARY
-          echo "```" >> $GITHUB_STEP_SUMMARY
