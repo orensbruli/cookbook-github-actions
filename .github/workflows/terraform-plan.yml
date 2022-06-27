@@ -62,10 +62,14 @@ jobs:
           terraform-version: ${{ env.terraform-version }}
           terraform-directory: ${{ env.terraform-directory }}
       - name: Terraform plan
+        id: tfplan
+        working-directory: ${{ env.terraform-directory }}
+        run: terraform plan -no-color | tee ./tf.plan
+      - name: Display Terraform plan on summary
         working-directory: ${{ env.terraform-directory }}
         run: |
-          terraform plan -no-color | tee ./tf.plan
-          echo "### Terraform Plan on envname ${{ inputs.envname }} from $GITHUB_REF_NAME :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "### Terraform Plan on ${{ inputs.envname }} from $GITHUB_REF_NAME :rocket:" >> $GITHUB_STEP_SUMMARY
           echo '~~~' >> $GITHUB_STEP_SUMMARY
-          cat ./tf.plan >> $GITHUB_STEP_SUMMARY
+          echo ${{ steps.tfplan.outcome }} >> $GITHUB_STEP_SUMMARY
+          echo ${{ steps.tfplan.outputs.stdout }} >> $GITHUB_STEP_SUMMARY
           echo '~~~' >> $GITHUB_STEP_SUMMARY
