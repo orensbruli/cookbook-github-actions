@@ -32,6 +32,9 @@ runs:
         aws-access-key-id: ${{ inputs.aws-access-key-id }}
         aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
         aws-region: ${{ inputs.aws-region }}
+    - name: Display AWS auth ID
+      run: aws sts get-caller-identity
+      shell: bash
     - name: Setup Terraform
       # Installs a specific version of Terraform
       # https://github.com/marketplace/actions/hashicorp-setup-terraform
