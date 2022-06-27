@@ -6,7 +6,15 @@ on:
     paths:
       - 'terraform/**'
   workflow_dispatch:
-
+    environment:
+      description: The Cloud Environment tp deploy to
+      required: true
+      default: 'dev'
+      type: choice
+      options:
+        - dev
+        - stage
+        - prod
 permissions:
   id-token: write
   contents: read    # This is required for actions/checkout
