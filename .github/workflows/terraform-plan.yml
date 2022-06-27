@@ -23,7 +23,6 @@ defaults:
   run:
     shell: bash
 env:
-  AWS_REGION : "us-east-1"
   terraform-version: 1.2.3
   terraform-directory: "terraform"
 jobs:
@@ -35,13 +34,17 @@ jobs:
       - name: Cloud Environment setup
         run: |
           echo "Running Terraform Plan on ${{ inputs.envname }}"
-          echo "awsid=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+          if [[ "${{ inputs.envname }}" == "prod" ]]; then
+            echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_PROD }}" >> $GITHUB_ENV
+            echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}" >> $GITHUB_ENV
+            echo "AWS_REGION=us-west-1"
+          fi
       - name: Initialize Terraform
         uses: ./.github/actions/terraform-init
         with:
           #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-access-key-id: ${{ env.awsid }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
           terraform-version: ${{ env.terraform-version }}
           terraform-directory: ${{ env.terraform-directory }}
