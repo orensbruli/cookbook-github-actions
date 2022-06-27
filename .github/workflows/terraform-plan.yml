@@ -70,6 +70,5 @@ jobs:
         run: |
           echo "### Terraform Plan on ${{ inputs.envname }} from $GITHUB_REF_NAME :rocket:" >> $GITHUB_STEP_SUMMARY
           echo '~~~' >> $GITHUB_STEP_SUMMARY
-          echo ${{ steps.tfplan.outcome }} >> $GITHUB_STEP_SUMMARY
-          echo ${{ steps.tfplan.outputs.stdout }} >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.tfplan.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
           echo '~~~' >> $GITHUB_STEP_SUMMARY
