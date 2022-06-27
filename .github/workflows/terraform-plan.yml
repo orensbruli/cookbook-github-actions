@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       envname:
-        description: The Cloud Environment to plan Terraform
+        description: The Cloud Environment to run
         required: true
         default: 'dev'
         type: choice
@@ -19,6 +19,9 @@ on:
 permissions:
   id-token: write
   contents: read    # This is required for actions/checkout
+defaults:
+  run:
+    shell: bash
 env:
   AWS_REGION : "us-east-1"
   terraform-version: 1.2.3
@@ -29,10 +32,15 @@ jobs:
     steps:
       - name: Checkout GitHub Repo
         uses: actions/checkout@v3
+      - name: Cloud Environment setup
+        run: |
+          echo "Running Terraform Plan on ${{ inputs.envname }}"
+          echo "awsid=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
       - name: Initialize Terraform
         uses: ./.github/actions/terraform-init
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-access-key-id: ${{ env.awsid }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
           terraform-version: ${{ env.terraform-version }}
