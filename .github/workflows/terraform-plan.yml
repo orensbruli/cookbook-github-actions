@@ -6,15 +6,16 @@ on:
     paths:
       - 'terraform/**'
   workflow_dispatch:
-    envname:
-      description: The Cloud Environment to plan Terraform
-      required: true
-      default: 'dev'
-      type: choice
-      options:
-        - dev
-        - stage
-        - prod
+    inputs:
+      envname:
+        description: The Cloud Environment to plan Terraform
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
 permissions:
   id-token: write
   contents: read    # This is required for actions/checkout
