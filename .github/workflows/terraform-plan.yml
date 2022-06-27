@@ -42,11 +42,12 @@ jobs:
             echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_STAGE }}" >> $GITHUB_ENV
             echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}" >> $GITHUB_ENV
             echo "AWS_REGION=us-east-2" >> $GITHUB_ENV
-          fi
           elif [[ "${{ inputs.envname }}" == "prod" ]]; then
             echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_PROD }}" >> $GITHUB_ENV
             echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}" >> $GITHUB_ENV
             echo "AWS_REGION=us-west-1" >> $GITHUB_ENV
+          else
+            echo "envname ${{ inputs.envname }} is unsupported"
           fi
       - name: Initialize Terraform
         uses: ./.github/actions/terraform-init
