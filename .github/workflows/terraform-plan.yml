@@ -32,6 +32,8 @@ jobs:
       - name: Checkout GitHub Repo
         uses: actions/checkout@v3
       - name: Cloud Environment setup
+        # Avoiding the use of GitHub Environment since it is a paid feature of GitHub Enterprise for private repos
+        # https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment
         run: |
           echo "Running Terraform Plan on ${{ inputs.envname }}"
           if [[ "${{ inputs.envname }}" == "dev" ]] || [[ "${{ inputs.envname }}" == "" ]] ; then
@@ -47,12 +49,12 @@ jobs:
             echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}" >> $GITHUB_ENV
             echo "AWS_REGION=us-west-1" >> $GITHUB_ENV
           else
-            echo "envname ${{ inputs.envname }} is unsupported"
+            echo "::error title=Unsupported envname::The envname ${{ inputs.envname }} is unsupported"
+            exit 1
           fi
       - name: Initialize Terraform
         uses: ./.github/actions/terraform-init
         with:
-          #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
@@ -60,4 +62,6 @@ jobs:
           terraform-directory: ${{ env.terraform-directory }}
       - name: Terraform plan
         working-directory: ${{ env.terraform-directory }}
-        run: terraform plan -no-color
+        run: |
+          terraform plan -no-color
+          echo "### Terraform Plan on envname ${{ inputs.envname }} :rocket:" >> $GITHUB_STEP_SUMMARY
