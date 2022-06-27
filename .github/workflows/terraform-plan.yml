@@ -6,8 +6,8 @@ on:
     paths:
       - 'terraform/**'
   workflow_dispatch:
-    environment:
-      description: The Cloud Environment tp deploy to
+    envname:
+      description: The Cloud Environment to plan Terraform
       required: true
       default: 'dev'
       type: choice
