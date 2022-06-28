@@ -67,4 +67,5 @@ jobs:
         uses: ./.github/actions/terraform-plan
         with:
           envname: ${{ inputs.envname }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           terraform-directory: ${{ env.terraform-directory }}

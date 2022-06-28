@@ -6,6 +6,9 @@ inputs:
   envname:
     description: The Cloud Environment to run
     required: true
+  github-token:
+    description: GitHub Token
+    required: true
   terraform-directory:
     description: Directory where Terraform config is located
     required: false
@@ -39,7 +42,7 @@ runs:
       uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ inputs.github-token }}
         script: |
           // 1. Retrieve existing bot comments for the PR
           const { data: comments } = await github.rest.issues.listComments({
