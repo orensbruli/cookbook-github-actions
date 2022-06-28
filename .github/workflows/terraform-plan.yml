@@ -19,6 +19,7 @@ on:
           - prod
 permissions:
   id-token: write
+  pull-requests: write
   contents: read    # This is required for actions/checkout
 defaults:
   run:
