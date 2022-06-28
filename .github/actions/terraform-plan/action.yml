@@ -1,0 +1,37 @@
+name: terraform plan
+author: Jirawat Uttayaya (juttayaya)
+description: Terraform Validate and Plan
+
+inputs:
+  envname:
+    description: The Cloud Environment to run
+    required: true
+  terraform-directory:
+    description: Directory where Terraform config is located
+    required: false
+    default: '.'
+  terraform-plan-output:
+    description: Terraform plan output file
+    required: false
+    default: 'github-actions.tfplan'
+
+runs:
+  using: composite
+  steps:
+    - name: Terraform validate
+      working-directory: ${{ inputs.terraform-directory }}
+      run: terraform validate
+      shell: bash
+    - name: Terraform plan
+      id: tfplan
+      working-directory: ${{ inputs.terraform-directory }}
+      run: terraform plan -no-color -out=${{ inputs.terraform-plan-output }}
+      shell: bash
+    - name: Display Terraform plan on summary
+      working-directory: ${{ inputs.terraform-directory }}
+      run: |
+        echo "### Terraform Plan on ${{ inputs.envname }} from $GITHUB_REF_NAME :rocket:" >> $GITHUB_STEP_SUMMARY
+        echo '~~~' >> $GITHUB_STEP_SUMMARY
+        echo "${{ steps.tfplan.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
+        echo '~~~' >> $GITHUB_STEP_SUMMARY
+      shell: bash

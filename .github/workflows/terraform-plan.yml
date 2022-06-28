@@ -62,13 +62,7 @@ jobs:
           terraform-version: ${{ env.terraform-version }}
           terraform-directory: ${{ env.terraform-directory }}
       - name: Terraform plan
-        id: tfplan
-        working-directory: ${{ env.terraform-directory }}
-        run: terraform plan -no-color | tee ./tf.plan
-      - name: Display Terraform plan on summary
-        working-directory: ${{ env.terraform-directory }}
-        run: |
-          echo "### Terraform Plan on ${{ inputs.envname }} from $GITHUB_REF_NAME :rocket:" >> $GITHUB_STEP_SUMMARY
-          echo '~~~' >> $GITHUB_STEP_SUMMARY
-          echo "${{ steps.tfplan.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
-          echo '~~~' >> $GITHUB_STEP_SUMMARY
+        uses: ./.github/actions/terraform-plan
+        with:
+          envname: ${{ inputs.envname }}
+          terraform-directory: ${{ env.terraform-directory }}
