@@ -80,4 +80,3 @@ runs:
               body: output
             });
           }
-      shell: bash
