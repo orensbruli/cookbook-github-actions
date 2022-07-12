@@ -56,7 +56,7 @@ runs:
         path: ~/.terraform.d/plugin-cache
         key: ${{ runner.os }}-tf-plugin-cache-${{ hashFiles(format('{0}/**/.terraform.lock.hcl', inputs.terraform-directory)) }}
         restore-keys: ${{ runner.os }}-tf-plugin-cache-
-    - name: Terraform init
+    - name: Terraform provider cache work-around
       working-directory: ${{ inputs.terraform-directory }}
       # The usual scenario is to create .terraform.lock.hcl on a Mac and run on Linux
       # If using file-based provider caching, Terraform may not have the opportunity
@@ -65,5 +65,11 @@ runs:
       # https://www.terraform.io/language/files/dependency-lock#new-provider-package-checksums
       run: |
         terraform providers lock -platform=linux_amd64
+      shell: bash
+      continue-on-error: true
+    - name: Terraform init
+      working-directory: ${{ inputs.terraform-directory }}
+      run: |
         terraform init
+        terraform providers lock -platform=linux_amd64
       shell: bash
