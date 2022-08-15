@@ -10,6 +10,9 @@ jobs:
     name: GitHub Job Example - Tags
     runs-on: ubuntu-latest
     steps:
+      # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+      # https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
       - name: GitHub Steps Example - Tags
         run: |
-          echo "Tag name ${ GITHUB_REF_NAME }"
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
