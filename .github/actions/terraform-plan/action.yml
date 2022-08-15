@@ -28,7 +28,9 @@ runs:
     - name: Terraform plan
       id: tfplan
       working-directory: ${{ inputs.terraform-directory }}
-      run: terraform plan -no-color -out=${{ inputs.terraform-plan-output }}
+      run: |
+        terraform plan -no-color -out=${{ inputs.terraform-plan-output }} > /dev/null
+        terraform show -no-color ${{ inputs.terraform-plan-output }}
       shell: bash
     - name: Display Terraform plan on summary
       working-directory: ${{ inputs.terraform-directory }}
