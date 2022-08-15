@@ -16,6 +16,8 @@ jobs:
         run: |
           echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+      - name: Checkout GitHub Repo
+        uses: actions/checkout@v3
       - name: Set Short Git Commit SHA
         id: gitvar
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
