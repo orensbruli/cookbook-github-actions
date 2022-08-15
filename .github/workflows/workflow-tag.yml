@@ -1,0 +1,15 @@
+name: GitHub Workflow Example - Tag
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  github-example-tags:
+    name: GitHub Job Example - Tags
+    runs-on: ubuntu-latest
+    steps:
+      - name: GitHub Steps Example - Tags
+        run: |
+          echo "Tag name ${{ GITHUB_REF_NAME }}"
