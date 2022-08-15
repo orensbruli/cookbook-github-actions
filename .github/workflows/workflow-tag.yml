@@ -16,3 +16,8 @@ jobs:
         run: |
           echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+      - name: Set Short Git Commit SHA
+        id: gitvar
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      - name: Get Short Git Commit SHA
+        run: echo ${{ steps.gitvar.outputs.sha_short }}
