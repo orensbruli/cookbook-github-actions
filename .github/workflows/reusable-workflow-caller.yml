@@ -9,4 +9,7 @@ jobs:
     name: 01A Calling Reusable Workflow
     # Use the `uses` keyword to invoke Reusable GitHub Workflows
     uses: open-rmf/rmf_ci_templates/.github/workflows/reusable_build.yaml@main
+    with:
+      packages: patata
+      colcon-defaults: dospapas
     secrets: inherit
